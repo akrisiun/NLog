@@ -460,9 +460,6 @@
       <LastGenOutput>InternalLogger-generated.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <!--<ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>-->
   <ItemGroup>
     <Content Include="Internal\LayoutHelpers.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -475,6 +472,18 @@
     <ItemGroup Condition="Exists('$(BuildInfoFile)')">
       <Compile Include="$(BuildInfoFile)" />
     </ItemGroup>
+  </Target>
+  
+   <Target Name="Pack">
+    <Message Text="Packing $(ProjectName)" Importance="high" />
+    <MSBuild Projects="$(MSBuildProjectFullPath)" 
+             Properties="Configuration=$(Configuration);
+                    VisualStudioVersion=$(VisualStudioVersion);
+                    PackageOutputPath=$(NupkgOutputDirectory);
+                    NoPackageAnalysis=true;
+                    IncludeSymbols=true;
+                    NoBuild=true;">
+    </MSBuild>
   </Target>
   <!--<Import Project="$(SolutionDir)\.nuget\NuGet.targets" />-->
 </Project>
